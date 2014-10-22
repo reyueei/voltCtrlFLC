@@ -1,0 +1,42 @@
+[System]
+Name='dataGather_w_con_2inputs'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=0
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='error'
+Range=[-20 20]
+NumMFs=5
+MF1='largeNeg':'trapmf',[-21 -20 -6 -5]
+MF2='neg':'trapmf',[-6 -5 -3 -2]
+MF3='zero':'trapmf',[-3 -2 2 3]
+MF4='pos':'trapmf',[2 3 5 6]
+MF5='largePos':'trapmf',[5 6 20 21]
+
+[Input2]
+Name='errorDot'
+Range=[-20 20]
+NumMFs=3
+MF1='neg':'trapmf',[-21 -20 -1 0]
+MF2='zero':'trimf',[-1 0 1]
+MF3='pos':'trapmf',[0 1 20 21]
+
+[Output1]
+Name='output1'
+Range=[-100 100]
+NumMFs=5
+MF1='largeDown':'trimf',[-150 -100 -50]
+MF2='down':'trimf',[-100 -50 0]
+MF3='noChange':'trimf',[-50 -4.441e-016 50]
+MF4='pos':'trimf',[0 50 100]
+MF5='largePos':'trimf',[50 100 150]
+
+[Rules]
