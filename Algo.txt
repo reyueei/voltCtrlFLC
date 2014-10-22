@@ -1,0 +1,84 @@
+
+Fuzzy Control Language (FCL)
+is the language used in the implementation of the fuzzy logic in control system. This formal structure and same styles are helpful to understand and write in programming language(we used Pyfuzy based on Python programming), which can parse the Fuzzy Control Language(FCL) format.
+
+In Our Fuzzy System, we have 2 Inputs:
+- input_error (input error)
+- input_errordot (input errordot)
+and 1 output:
+-error_voltap (output voltage Tap in autoTransformer)
+
+
+
+Algo:
+1.) list of loads  list=[Load1,Load2,Load3]
+2.) list of voltage values measured  from each load => voltLoad = [Volt1,Volt2,Vol3]
+3.) list of Errors calculated from each load wrt voltage Reference = > Error=[(Vref-voltLoad[n]) for n in range(0,len(voltLoad))] = [Error1,Error2,Error3]
+4.) list of magnitude errors calculated from each load = > ErrorMag = [abs(Error[n] for n in range(0,len(Error))] = [ErrMag1,ErrMag2,Errmag3]
+5.) select the maximum magnitude Error = maxError = max(ErrorMag)
+
+The resulting maxError is our 1st Input: input_error = maxError
+					 while the initial value for our input_errordot is zero: input_errordot = 0
+					input_errordot = input_prevError-input_error
+Applying the Fuzzy Logic
+
+Linguistic variable - a variable whose values are words or sentences in a natural or artificial language rather than a numbers
+
+Input variables (linguistic variable): [input_error,input_errordot]
+Output variable : VoltageTap
+
+I. Fuzzification
+
+1.) input_error:
+
+Crisp Values			Linguistic Labels/values
+-5<input_error			LN(Large Negative)
+-5<=input_error<-2		N(Negative)
+-2<=input_error<=2		Z(Zero)
+2<input_error<=5		P(Postive)
+input_error>5			LP(Large Positive)
+
+2.) input_errordot
+Crisp Values			Linguistic Labels/values
+-5<input_errordot		LN(Large Negative)
+-5<=input_errordot<-2		N(Negative)
+-2<=input_errordot<=2		Z(Zero)
+2<input_errordot<=5		P(Postive)
+input_errordot>5		LP(Large Positive)
+
+3.) output_voltTap
+
+Crisp Values(output_voltTap)	Linguistic Labels/values
+214				LN(Large Negative)
+217				N(Negative)
+221				Z(Zero)
+224				P(Postive)
+227				LP(Large Positive)
+
+Fuzzy sets:
+input_error(LN,N,Z,P,LP)
+input_errordot(LN,N,Z,P,LP)
+output_voltTap(LN,N,Z,P,LP)
+
+
+II.) Choosing Membership Function:
+Definition:
+Membership Function - is a curve that defines how each point in the input space is mapped to a membership value (or degree of membership) between 0 and 1
+
+Note: For simplicity and availability, we use the Triangular membership funtion.
+(see attached graphs: input_error,input_errordot,output)
+
+The input and output linguistic variables are represented in Table 1, resulting to 25, "if-Then" rules to define the rule-base of the Fuzzy inference system.
+
+
+III.) Rule Matrix: (See attached)
+
+IV.) Defuzzification-  It refers to the way a crisp value is extracted from a fuzzy set as a representative value.
+(The Fuzzy Inference System):
+
+
+Definition: 
+Fuzzy inference is the process of formulating the mapping from a given input to an output using fuzzy logic. The mapping then provides a basis from which decisions can be made, or patterns discerned.
+The Mandani-type inference expects the output membership functions to be fuzzy sets. After the aggregation process, there is a fuzzy set for each output variable that needs defuzzification. By using a type of output called singleton output membership function, it enhances the efficiency of the defuzzification process.
+
+Note: For availability of the specific programming language package purpose, we use a Mandani type FIS.
