@@ -1,0 +1,69 @@
+Cubietruck/Cubieboard3(Linaro-Ubuntu Distribution)
+
+Configuration for enabling Uarts and GPIOs in the cubietruck.
+-converting binary files into fex files(command:bin2fex)
+edit the converted fex file: (enable uart3,uart4 and uart7)
+
+[uart_para3]
+uart_used = 1
+uart_port = 3
+uart_type = 4
+uart_tx = port:PH00<4><1><default><default>
+uart_rx = port:PG07<4><1><default><default>
+uart_rts = port:PH02<4><1><default><default>
+uart_cts = port:PH03<4><1><default><default>
+
+[uart_para4]
+uart_used = 1
+uart_port = 4
+uart_type = 2
+uart_tx = port:PH04<4><1><default><default>
+uart_rx = port:PG11<4><1><default><default>
+
+
+[uart_para7]
+uart_used = 1
+uart_port = 7
+uart_type = 2
+uart_tx = port:PA14<4><1><default><default>
+uart_rx = port:PI21<3><1><default><default>
+
+- converting fex files to binary files(command:fex2bin)
+
+- after reboot, list the available uarts
+	$ dmesg | grep uart
+
+Output:
+[uart]: used uart info: 0xff
+[uart]: serial probe 0 irq 33 mapbase 0x01c28000
+sunxi-uart.0: ttyS0 at MMIO 0x1c28000 (irq = 33) is a U6_16550A
+[uart]: serial probe 1 irq 34 mapbase 0x01c283400
+sunxi-uart.3: ttyS3 at MMIO 0x1c28000 (irq = 33) is a U6_16550A
+[uart]: serial probe 1 irq 34 mapbase 0x01c283400
+sunxi-uart.4: ttyS4 at MMIO 0x1c28000 (irq = 33) is a U6_16550A
+[uart]: serial probe 1 irq 34 mapbase 0x01c283400
+sunxi-uart.7: ttyS7 at MMIO 0x1c28000 (irq = 33) is a U6_16550A
+
+(see attached pinout on cubietruck)
+
+Activating GPIO
+
+[gpio_para]
+gpio_used = 1
+gpio_num = 8
+gpio_pin_1 = port:PH20<1><default><default><1>
+gpio_pin_2 = port:PH10<0><default><default><0>
+gpio_pin_3 = port:PB19<1><default><3><1>
+gpio_pin_4 = port:PG04<1><default><default><1>
+gpio_pin_5 = port:PG03<1><default><default><1>
+gpio_pin_6 = port:PG01<1><default><default><1>
+gpio_pin_7 = port:PG00<1><default><default><1>
+gpio_pin_8 = port:PG02<1><default><default><1>
+
+
+command(list all gpio pins enabled)
+$ ls /sys/class/gpio
+output:
+gpio1_ph20, gpio2_ph10, gpio3_pb19, gpio4_pg04, gpio5_pg03, gpio6_pg01, gpio7_pg00, gpio8_pg02
+
+(response time sa program)
