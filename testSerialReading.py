@@ -31,13 +31,15 @@ def do_process(name,portName):
                 do_fuzzy(line2)
     ser.close()
 
+    #membership grade and defuzzification
 def membership(value,center):
     #square root of square of value
     output = value*center
     f_values.append(output)
-    result = sum([g_values[n] for n in range(0,len(g_values))])
-    print(result)
+    result = sum([f_values[n] for n in range(0,len(f_values))])
     g_values.append(result)
+    #print(result)
+    #g_values.append(result)
     #outputTap(result)
 
 # output    
@@ -99,6 +101,7 @@ def do_fuzzy(x):
         membership(largePos,centerVal)
 
 def trap(a, b, c, d, value):
+    assert all([isinstance(val, float) for val in (a, b, c, d, value)])
     first = (value - a) / (b - a)
     second = (d - value) / (d - c)
     return( max(min(first, 1., second), 0.))
