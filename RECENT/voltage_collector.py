@@ -19,7 +19,7 @@ class VoltageCollector(threading.Thread):
             output = value*center
            #g_values.append(output)
            # result = sum([g_values[n] for n in range(0,len(g_values))])
-            #print(output)
+            print("defuzzification value : " + str(output))
 	    self.__m_bucket.append(output)
             #print(result)
             #outputTap(result)
@@ -56,6 +56,7 @@ class VoltageCollector(threading.Thread):
                                         list_of_val = raw_data.split(",")
                                         voltage = float(list_of_val[5])
                                         error = 220 - voltage
+					print(self.__m_portname,error)
                                         self.fuzzification(error)
                                         #self.__m_bucket.append(voltage)
                         except (Exception) as err:
@@ -74,35 +75,35 @@ class VoltageCollector(threading.Thread):
             largeNeg = self.trap(-51,-50,-6,-5,error)
             if largeNeg > 0:
                 centerVal = -94
-                print("LN = ", largeNeg)
+               # print("LN = ", largeNeg)
                 self.membership(largeNeg,centerVal)
                 
             #def neg(x):
-            neg = self.trap(-6,-5,-3,-2,error)
+            neg = self.trap(-6,-5,-3,-0.73,error)
             if neg > 0:
                 centerVal = -53.3
-                print("N = ", neg)
+                #print("N = ", neg)
                 self.membership(neg,centerVal)
 
             #def zero(x):
-            zero = self.trap(-3,-2,2,3,error)
+            zero = self.trap(-5.5,-1,1,5.5,error)
             if zero > 0:
                 centerVal = 0
-                print("Z = ", zero)
+                #print("Z = ", zero)
                 self.membership(zero,centerVal)
 
             #def positive(x):
-            positive = self.trap(2,3,5,6,error)
+            positive = self.trap(0.73,3,5,6,error)
             if positive > 0:
                 centerVal = 53.3
-                print("P = ",positive)
+                #print("P = ",positive)
                 self.membership(positive,centerVal)
 
             #def largePos(x):
             largePos = self.trap(5,6,50,51,error)
             if largePos > 0:
                 centerVal = 94
-                print("LP = ",largePos)
+                #print("LP = ",largePos)
                 self.membership(largePos,centerVal)
 
         

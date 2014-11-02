@@ -13,8 +13,9 @@ class VoltageProcessor(threading.Thread):
         def run(self):
                 while not self.__m_exit:
                         result = float(self.__theAverage())
+			
 			#print("knd"+result)
-                        print("The average defuzz value: " + str(self.__theAverage()))
+                        #print("The average for the current time: " + result)
                         #result = str(self.__theAverage())
                         #print("kani",result)
                         # self.outputTap(str(self.__theAverage()))
@@ -26,56 +27,32 @@ class VoltageProcessor(threading.Thread):
                                 gpio1=int(4)
                                 gpio=str(gpio1)
                                 value=1
-                                #self.largeDown(gpio,value)
-				self.largeDown(gpio,value)
-         
-                        else:
-                                gpio1=int(4)
-                                gpio=str(gpio1)
-                                value=0
                                 self.largeDown(gpio,value)
-         
-                       
-                        if result > 20 and result < 60:
+				#self.down(gpio,value)
+                                
+                        elif result > 20 and result < 60:
                                 print("tap 3")
                                 gpio1=int(5)
                                 gpio=str(gpio1)
                                 value=1
-                                self.down(gpio,value)
-                     
-                        else:
-                                gpio1=int(5)
-                                gpio=str(gpio1)
-                                value=0
-                                self.down(gpio,value)
-                         
-                        
-                        if result >= -20 and result <=20:
+                                self.down(gpio,value)                     
+                                                      
+                        elif result >= -20 and result <=20:
                                 print("tap 2")
                                 gpio1=int(6)
                                 gpio=str(gpio1)
                                 value=1
                                 self.noChange(gpio,value)
-                    
-                        else:
-                                gpio1=int(6)
-                                gpio=str(gpio1)
-                                value=0
-                                self.noChange(gpio,value)
+
                                   
-                        if result > -60 and result < -20:
+                        elif result > -60 and result < -20:
                                 print("tap 1")
                                 gpio1=int(7)
                                 gpio=str(gpio1)
                                 value=1
                                 self.up(gpio,value)
-                        else:
-                                gpio1=int(7)
-                                gpio = str(gpio1)
-                                value=0
-                                self.up(gpio,value)
-                        
-                        if result <= -60 :
+                                            
+                        elif result <= -60 :
                                 print("tap 0")
                                 gpio1=int(8)
                                 gpio=str(gpio1)
@@ -83,10 +60,22 @@ class VoltageProcessor(threading.Thread):
                                 self.largeUp(gpio,value)
 
                         else:
-                                gpio1=int(8)
-                                gpio=str(gpio1)
+                                gpio1=int(4)
+                                gpio2=int(5)
+                                gpio3=int(6)
+                                gpio4=int(7)
+                                gpio5=int(8)
+                                gpio11=str(gpio1)
+                                gpio22=str(gpio2)
+                                gpio33=str(gpio3)
+                                gpio44=str(gpio4)
+                                gpio55=str(gpio5)
                                 value=0
-                                self.largeUp(gpio,value)
+                                self.largeDown(gpio11,value)
+                                self.down(gpio22,value)
+                                self.noChange(gpio33,value)
+                                self.up(gpio44,value)
+                                self.largeUp(gpio55,value)
                                 
 
         def addVolCol(self, p_volcol):

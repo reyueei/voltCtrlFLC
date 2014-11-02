@@ -3,7 +3,7 @@ import sys
 import math
 from operator import itemgetter
 from functools import partial
-x = 2
+x = 4
 g_values = []
 def membership(value,center):
     #square root of square of value
@@ -43,14 +43,14 @@ def tri(a, b, x):
 
 largeNeg = trap(-51,-50,-6,-5,x)
 if largeNeg > 0:
-    centerVal = -100
+    centerVal = -94
     print("LN = ", largeNeg)
     membership(largeNeg,centerVal)
     
 #def neg(x):
 neg = trap(-6,-5,-3,-2,x)
 if neg > 0:
-    centerVal = -50
+    centerVal = -53.3
     print("N = ", neg)
     membership(neg,centerVal)
 
@@ -64,14 +64,14 @@ if zero > 0:
 #def positive(x):
 positive = trap(2,3,5,6,x)
 if positive > 0:
-    centerVal = 50
+    centerVal = 53.3
     print("P = ",positive)
     membership(positive,centerVal)
 
 #def largePos(x):
 largePos = trap(5,6,50,51,x)
 if largePos > 0:
-    centerVal = 100
+    centerVal = 94
     print("LP = ",largePos)
     membership(largePos,centerVal)
 
