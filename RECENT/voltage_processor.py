@@ -12,15 +12,17 @@ class VoltageProcessor(threading.Thread):
 
         def run(self):
                 while not self.__m_exit:
-                        result = float(self.__theAverage())
+                        result = int(self.__theAverage())
 			#print("knd"+result)
-                        print("The average defuzz value: " + str(self.__theAverage()))
+                       	print("The average defuzz value: " + str(result))
                         #result = str(self.__theAverage())
                         #print("kani",result)
-                        # self.outputTap(str(self.__theAverage()))
+                        #self.outputTap(str(self.__theAverage()))
                         #self.outputTap(result)
-                        time.sleep(1)
+                        #currentTap=
 
+			time.sleep(1)
+			
                         if result >= 60:
                                 print("tap 4")
                                 gpio1=int(4)
@@ -88,7 +90,7 @@ class VoltageProcessor(threading.Thread):
                                 value=0
                                 self.largeUp(gpio,value)
                                 
-
+			#time.sleep(1)
         def addVolCol(self, p_volcol):
                 if self.__m_volcol_list is None:
                         self.__m_volcol_list = []
@@ -98,6 +100,7 @@ class VoltageProcessor(threading.Thread):
                 self.__m_exit = True
 
         def __theAverage(self):
+		#time.sleep(3)
                 if self.__m_volcol_list is None:
                         return 0
                 if len(self.__m_volcol_list) == 0:
@@ -106,7 +109,7 @@ class VoltageProcessor(threading.Thread):
                 temp_val = 0
                 counter = 0
                 index = 0
-
+		#time.sleep(5)
                 for volcol in self.__m_volcol_list:
                         try:
                                 counter += 1
