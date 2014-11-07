@@ -19,7 +19,7 @@ class VoltageCollector(threading.Thread):
             output = value*center
            #g_values.append(output)
            # result = sum([g_values[n] for n in range(0,len(g_values))])
-            print("defuzzification value : " + str(output))
+            #print("defuzzification value : " + str(output))
 	    self.__m_bucket.append(output)
             #print(result)
             #outputTap(result)
@@ -55,9 +55,10 @@ class VoltageCollector(threading.Thread):
                                 if raw_data:
                                         list_of_val = raw_data.split(",")
                                         voltage = float(list_of_val[5])
-                                        error = 220 - voltage
+                                        error = (226 - voltage)
 					print(self.__m_portname,error)
                                         self.fuzzification(error)
+					time.sleep(1)
                                         #self.__m_bucket.append(voltage)
                         except (Exception) as err:
                                 print("Error:" + str(err))
@@ -69,9 +70,9 @@ class VoltageCollector(threading.Thread):
                 if len(self.__m_bucket) == 0:
                         raise e.E_NoValue()
                 return self.__m_bucket.pop(0)
-
+		
         def fuzzification(self,error):
-            
+            #time.sleep(5)
             largeNeg = self.trap(-51,-50,-6,-5,error)
             if largeNeg > 0:
                 centerVal = -94
