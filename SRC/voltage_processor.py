@@ -9,62 +9,53 @@ class VoltageProcessor(threading.Thread):
                 self.__m_volcol_list = None
                 self.__m_exit = False
 
-
         def run(self):
                 while not self.__m_exit:
                         result = int(self.__theAverage())
-			#print("knd"+result)
-                       	print("The average defuzz value: " + str(result))
-                        #result = str(self.__theAverage())
-                        #print("kani",result)
-                        #self.outputTap(str(self.__theAverage()))
-                        #self.outputTap(result)
-                        #currentTap=
 
 			time.sleep(1)
-			
+
                         if result >= 60:
                                 print("tap 4")
                                 gpio1=int(4)
                                 gpio=str(gpio1)
                                 value=1
-                                #self.largeDown(gpio,value)
 				self.largeDown(gpio,value)
-         
+
                         else:
                                 gpio1=int(4)
                                 gpio=str(gpio1)
                                 value=0
                                 self.largeDown(gpio,value)
-         
-                       
+
+
                         if result > 20 and result < 60:
                                 print("tap 3")
                                 gpio1=int(5)
                                 gpio=str(gpio1)
                                 value=1
                                 self.down(gpio,value)
-                     
+
                         else:
                                 gpio1=int(5)
                                 gpio=str(gpio1)
                                 value=0
                                 self.down(gpio,value)
-                         
-                        
+
+
                         if result >= -20 and result <=20:
                                 print("tap 2")
                                 gpio1=int(6)
                                 gpio=str(gpio1)
                                 value=1
                                 self.noChange(gpio,value)
-                    
+
                         else:
                                 gpio1=int(6)
                                 gpio=str(gpio1)
                                 value=0
                                 self.noChange(gpio,value)
-                                  
+
                         if result > -60 and result < -20:
                                 print("tap 1")
                                 gpio1=int(7)
@@ -76,7 +67,7 @@ class VoltageProcessor(threading.Thread):
                                 gpio = str(gpio1)
                                 value=0
                                 self.up(gpio,value)
-                        
+
                         if result <= -60 :
                                 print("tap 0")
                                 gpio1=int(8)
@@ -89,8 +80,7 @@ class VoltageProcessor(threading.Thread):
                                 gpio=str(gpio1)
                                 value=0
                                 self.largeUp(gpio,value)
-                                
-			#time.sleep(1)
+
         def addVolCol(self, p_volcol):
                 if self.__m_volcol_list is None:
                         self.__m_volcol_list = []
@@ -100,7 +90,6 @@ class VoltageProcessor(threading.Thread):
                 self.__m_exit = True
 
         def __theAverage(self):
-		#time.sleep(3)
                 if self.__m_volcol_list is None:
                         return 0
                 if len(self.__m_volcol_list) == 0:
@@ -109,50 +98,40 @@ class VoltageProcessor(threading.Thread):
                 temp_val = 0
                 counter = 0
                 index = 0
-		#time.sleep(5)
                 for volcol in self.__m_volcol_list:
                         try:
                                 counter += 1
                                 temp_val += volcol.getValue()
-                                #print("temp_val"+ temp_val)
-                                #print(str(volcol.getName())+"generated"+ str(volcol.getValue()))
                         except e.E_NoValue:
-                                #counter -=1
                                 pass
                         except (Exception) as err:
-                                #print("Problem with the serial object " + str(err))
-                                #self.__m_volcol_list.pop(index)
                                 continue
                         index += 1
-                #if counter <=0:
-                #       counter=1
-                #print(temp_val/counter)
                 return temp_val/counter
 
-     
-                         #GPIOS ACTIVATION
+
+        #GPIOS ACTIVATION
         def largeDown(self,gpio,value):
+            # print("Tap Large Down.\n")
                 path = '/sys/class/gpio/gpio' + gpio + '_pg4/value'
                 f = open(path,'w')
                 f.write(str(value))
                 f.close()
-           # print("Tap Large Down.\n")
-                    
-                                
+
         def down(self,gpio,value):
           #  print("Tap Down\n")
                 path = '/sys/class/gpio/gpio' + gpio + '_pg3/value'
                 f = open(path,'w')
                 f.write(str(value))
                 f.close()
-         
+
         def noChange(self,gpio,value):
            # print("No Change Tap\n")
                 path = '/sys/class/gpio/gpio' + gpio + '_pg1/value'
                 f = open(path,'w')
                 f.write(str(value))
                 f.close()
-         
+
         def up(self,gpio,value):
            # print("Tap Up\n")
                 path = '/sys/class/gpio/gpio' + gpio + '_pg0/value'
@@ -166,6 +145,3 @@ class VoltageProcessor(threading.Thread):
                 f = open(path,'w')
                 f.write(str(value))
                 f.close()
-            
-        #OUTPUT Ranging
-        

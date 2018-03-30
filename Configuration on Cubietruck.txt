@@ -65,5 +65,3 @@ command(list all gpio pins enabled)
 $ ls /sys/class/gpio
 output:
 gpio1_ph20, gpio2_ph10, gpio3_pb19, gpio4_pg04, gpio5_pg03, gpio6_pg01, gpio7_pg00, gpio8_pg02
-
-(response time sa program)
